@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core';
 import { injected } from '../components/wallet/connectors';
 import styles from '../styles/Home.module.css';
+import Button from '@material-ui/core/Button';
 
 const Home: NextPage = () => {
   const { active, account, library, connector, chainId, activate, deactivate, error } =
@@ -35,20 +36,14 @@ const Home: NextPage = () => {
           <p>
             Connected with <b>{account}</b> on chain {chainId}
           </p>
-          <button
-            onClick={disconnect}
-            className="py-2 mt-20 mb-4 text-lg font-bold text-white rounded-lg w-56 bg-blue-600 hover:bg-blue-800"
-          >
+          <Button onClick={disconnect} variant="contained">
             Disconnect
-          </button>
+          </Button>
         </div>
       ) : (
-        <button
-          onClick={connect}
-          className="py-2 mt-20 mb-4 text-lg font-bold text-white rounded-lg w-56 bg-blue-600 hover:bg-blue-800"
-        >
+        <Button onClick={connect} variant="contained">
           Connect to MetaMask
-        </button>
+        </Button>
       )}
       {isUnsupportedChainIdError ? <p>Please switch to valid chain</p> : <p></p>}
     </div>
