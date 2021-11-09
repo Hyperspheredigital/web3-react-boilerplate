@@ -1,9 +1,9 @@
 import type { NextPage } from 'next';
 import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core';
 import { injected } from '../components/wallet/connectors';
-import styles from '../styles/Home.module.css';
 import { Button } from '@mui/material';
 import styled from 'styled-components';
+import Link from 'next/link';
 
 const Block = styled.div`
   min-height: 100vh;
@@ -42,7 +42,7 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <div className={styles.main}>
+      <Block>
         {active ? (
           <div>
             <p>
@@ -58,7 +58,7 @@ const Home: NextPage = () => {
           </Button>
         )}
         {isUnsupportedChainIdError ? <p>Please switch to valid chain</p> : <p></p>}
-      </div>
+      </Block>
     </>
   );
 };
