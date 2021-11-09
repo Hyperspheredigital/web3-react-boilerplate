@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core';
 import { injected } from '../components/wallet/connectors';
 import styles from '../styles/Home.module.css';
-import Button from '@material-ui/core/Button';
+import { Button } from '@mui/material';
 
 const Home: NextPage = () => {
   const { active, account, library, connector, chainId, activate, deactivate, error } =
