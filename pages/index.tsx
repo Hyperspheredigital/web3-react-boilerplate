@@ -2,7 +2,18 @@ import type { NextPage } from 'next';
 import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core';
 import { injected } from '../components/wallet/connectors';
 import styles from '../styles/Home.module.css';
-import Button from '@material-ui/core/Button';
+import { Button } from '@mui/material';
+import styled from 'styled-components';
+
+const Block = styled.div`
+  min-height: 100vh;
+  padding: 4rem 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 const Home: NextPage = () => {
   const { active, account, library, connector, chainId, activate, deactivate, error } =
@@ -30,23 +41,25 @@ const Home: NextPage = () => {
   }
 
   return (
-    <div className={styles.main}>
-      {active ? (
-        <div>
-          <p>
-            Connected with <b>{account}</b> on chain {chainId}
-          </p>
-          <Button onClick={disconnect} variant="contained">
-            Disconnect
+    <>
+      <div className={styles.main}>
+        {active ? (
+          <div>
+            <p>
+              Connected with <b>{account}</b> on chain {chainId}
+            </p>
+            <Button onClick={disconnect} variant="contained">
+              Disconnect
+            </Button>
+          </div>
+        ) : (
+          <Button onClick={connect} variant="contained">
+            Connect to MetaMask
           </Button>
-        </div>
-      ) : (
-        <Button onClick={connect} variant="contained">
-          Connect to MetaMask
-        </Button>
-      )}
-      {isUnsupportedChainIdError ? <p>Please switch to valid chain</p> : <p></p>}
-    </div>
+        )}
+        {isUnsupportedChainIdError ? <p>Please switch to valid chain</p> : <p></p>}
+      </div>
+    </>
   );
 };
 

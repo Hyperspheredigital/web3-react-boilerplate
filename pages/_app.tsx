@@ -2,10 +2,12 @@ import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import { Web3ReactProvider } from '@web3-react/core';
 import Web3 from 'web3';
-import React, { Fragment, useEffect } from 'react';
-import { ThemeProvider } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { darkTheme, lightTheme } from '../src/theme';
+import React, { useEffect } from 'react';
+import { ThemeProvider } from '@mui/system';
+import { CssBaseline } from '@mui/material';
+import { StyledEngineProvider } from '@mui/styled-engine-sc';
+import theme from '../styles/theme';
+import Toolbar from '../components/Toolbar/Toolbar';
 
 function getLibrary(provider: any) {
   return new Web3(provider);
@@ -21,15 +23,18 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, []);
 
   return (
-    <Fragment>
-      <ThemeProvider theme={darkTheme}>
-        <Web3ReactProvider getLibrary={getLibrary}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          <Component {...pageProps} />
-        </Web3ReactProvider>
-      </ThemeProvider>
-    </Fragment>
+    <>
+      <StyledEngineProvider injectFirst={true}>
+        <ThemeProvider theme={theme}>
+          <Web3ReactProvider getLibrary={getLibrary}>
+            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+            <CssBaseline />
+            <Toolbar></Toolbar>
+            <Component {...pageProps} />
+          </Web3ReactProvider>
+        </ThemeProvider>
+      </StyledEngineProvider>
+    </>
   );
 }
 
