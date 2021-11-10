@@ -1,21 +1,21 @@
-import React from 'react';
+import * as React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
-import { ServerStyleSheets } from '@material-ui/core/styles';
+import { ServerStyleSheet } from 'styled-components';
+
+import theme from '../styles/theme';
 
 export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="en">
         <Head>
+          <meta name="viewport" content="initial-scale=1, width=device-width" />
+          {/* PWA primary color */}
+          <meta name="theme-color" content={theme.palette.primary.main} />
           <link
             rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Lato:300,400,500,700&display=swap"
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
           />
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400,500,700&display=swap"
-          />
-          <link rel="icon" href="/favicon.svg" />
         </Head>
         <body>
           <Main />
@@ -26,19 +26,18 @@ export default class MyDocument extends Document {
   }
 }
 
+// `getInitialProps` belongs to `_document` (instead of `_app`),
+// it's compatible with static-site generation (SSG).
 MyDocument.getInitialProps = async (ctx) => {
-  const sheets = new ServerStyleSheets();
-  const originalRenderPage = ctx.renderPage;
+  // Step 1: Create an instance of ServerStyleSheet
+  const sheet = new ServerStyleSheet();
 
-  ctx.renderPage = () =>
-    originalRenderPage({
-      enhanceApp: (App) => (props) => sheets.collect(<App {...props} />),
-    });
+  // Step 2: Retrieve styles from components in the page
+  const view = ctx.renderPage((App) => (props) => sheet.collectStyles(<App {...props} />));
 
-  const initialProps = await Document.getInitialProps(ctx);
+  // Step 3: Extract the styles as <style> tags
+  const styleTags = sheet.getStyleElement();
 
-  return {
-    ...initialProps,
-    styles: [...React.Children.toArray(initialProps.styles), sheets.getStyleElement()],
-  };
+  // Step 4: Pass styleTags as a prop
+  return { ...view, styleTags };
 };
