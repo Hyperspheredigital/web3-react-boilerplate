@@ -1,11 +1,19 @@
-import { Button, IconButton, Snackbar } from '@mui/material';
+import { Button, CircularProgress, IconButton, Snackbar } from '@mui/material';
 import Container from '@mui/material/Container';
 import Link from 'next/link';
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 
 const Homepage = () => {
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, [setIsLoading]);
 
   const handleClick = () => {
     setOpen(true);
@@ -46,6 +54,7 @@ const Homepage = () => {
           message="Note archived"
           action={action}
         />
+        {isLoading && <CircularProgress />}
       </div>
     </Container>
   );
