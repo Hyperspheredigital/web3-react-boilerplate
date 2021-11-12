@@ -4,11 +4,10 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import Web3Modal from 'web3modal';
-import { useCustomContext } from '../../context';
+import { useWalletContext } from '../hooks/useWalletContext';
 
 export default function ButtonAppBar({}) {
-  const { walletState, connect, disconnect } = useCustomContext();
+  const { walletState, connect, disconnect } = useWalletContext();
   const { address } = walletState;
 
   return (
@@ -16,14 +15,14 @@ export default function ButtonAppBar({}) {
       <AppBar position="static" color="secondary">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            {address}
+            Wharf Finance
           </Typography>
           {address ? (
             <Button color="inherit" onClick={disconnect}>
               Disconnect Wallet
             </Button>
           ) : (
-            <Button color="inherit" onClick={connect}>
+            <Button color="primary" onClick={connect} variant="contained">
               Connect Wallet
             </Button>
           )}

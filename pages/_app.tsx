@@ -1,26 +1,20 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
-import { Web3ReactProvider } from '@web3-react/core';
-import Web3 from 'web3';
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import { ThemeProvider } from '@mui/system';
 import { CssBaseline } from '@mui/material';
 import { StyledEngineProvider } from '@mui/styled-engine-sc';
 import theme from '../styles/theme';
-import Toolbar from '../components/Toolbar/Toolbar';
 import Web3Modal from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import { providers } from 'ethers';
-import WalletContext from '../context';
-import { ellipseAddress, getChainData } from '../lib/utilities';
-
-// TODO: rename
-import { reducer, initialState } from '../context/reducers/wallet';
+import WalletContext from '../hooks/useWalletContext';
+import { getChainData } from '../lib/utilities';
+import * as WalletReducer from '../hooks/reducers/wallet';
 
 let web3Modal: Web3Modal;
 if (typeof window !== 'undefined') {
   web3Modal = new Web3Modal({
-    network: 'mainnet', // optional
     cacheProvider: true,
     providerOptions: {
       walletconnect: {
@@ -34,7 +28,10 @@ if (typeof window !== 'undefined') {
 }
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [walletState, setWalletState] = useReducer(reducer, initialState);
+  const [walletState, setWalletState] = useReducer(
+    WalletReducer.reducer,
+    WalletReducer.initialState
+  );
   const { provider, web3Provider, address, chainId } = walletState;
 
   // Remove the server-side injected CSS.
@@ -138,7 +135,6 @@ function MyApp({ Component, pageProps }: AppProps) {
           <WalletContext.Provider
             value={{ walletState, setWalletState, connect, disconnect, chainData }}
           >
-            <Toolbar></Toolbar>
             <Component {...pageProps} />
           </WalletContext.Provider>
         </ThemeProvider>
