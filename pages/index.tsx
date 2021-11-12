@@ -3,9 +3,10 @@ import { ellipseAddress } from '../lib/utilities';
 import styled from 'styled-components';
 import { useWalletContext } from '../hooks/useWalletContext';
 import Toolbar from '../components/Toolbar';
+import SendEthForm from '../components/SendEthForm';
 
 const Block = styled.div`
-  min-height: 94vh;
+  min-height: 100vh;
   padding: 4rem 0;
   flex: 1;
   display: flex;
@@ -74,6 +75,8 @@ export const Home = (): JSX.Element => {
             </Button>
           )}
         </div>
+        <br />
+        {web3Provider && <SendEthForm />}
       </Block>
     </>
   );

@@ -6,13 +6,13 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useWalletContext } from '../hooks/useWalletContext';
 
-export default function ButtonAppBar({}) {
+export default function AppToolbar({}) {
   const { walletState, connect, disconnect } = useWalletContext();
   const { address } = walletState;
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" color="secondary">
+      <AppBar position="fixed" color="secondary">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Wharf Finance

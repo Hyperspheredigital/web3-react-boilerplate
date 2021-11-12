@@ -1,4 +1,4 @@
-import { Contract } from 'ethers';
+import { BigNumberish, Contract } from 'ethers';
 import { useWalletContext } from '../hooks/useWalletContext';
 import ERC20_ABI from '../contracts/ERC20.json';
 import { useEffect, useState } from 'react';
@@ -13,19 +13,18 @@ type TokenBalanceProps = {
 const TokenBalance = ({ tokenAddress, symbol }: TokenBalanceProps) => {
   const { walletState } = useWalletContext();
   const { address, web3Provider } = walletState;
-  const [balance, setBalance] = useState(0);
+  const [balance, setBalance] = useState('');
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!web3Provider) console.log('no web3 provider...');
     if (web3Provider) {
       let contract = new Contract(tokenAddress, ERC20_ABI, web3Provider);
-      contract.balanceOf(address).then((balance) => {
+      contract.balanceOf(address).then((balance: BigNumberish) => {
         setBalance(parseBalance(balance));
         setLoading(false);
       });
     }
-  }, [address, web3Provider]);
+  }, [tokenAddress, address, web3Provider]);
 
   return (
     <div>
