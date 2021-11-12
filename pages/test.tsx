@@ -3,6 +3,7 @@ import Container from '@mui/material/Container';
 import Link from 'next/link';
 import { Fragment, useEffect, useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
+import TokenBalance from '../components/TokenBalance';
 
 const Homepage = () => {
   const [open, setOpen] = useState(false);
@@ -56,6 +57,11 @@ const Homepage = () => {
         />
         {isLoading && <CircularProgress />}
       </div>
+
+      <TokenBalance
+        tokenAddress="0xc7AD46e0b8a400Bb3C915120d284AafbA8fc4735"
+        symbol="DAI"
+      ></TokenBalance>
     </Container>
   );
 };

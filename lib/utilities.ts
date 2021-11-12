@@ -1,5 +1,7 @@
 import supportedChains from './chains';
 import { IChainData } from './types';
+import type { BigNumberish } from '@ethersproject/bignumber';
+import { formatUnits } from '@ethersproject/units';
 
 export function getChainData(chainId?: number): IChainData {
   const chainData = supportedChains.filter((chain: any) => chain.chain_id === chainId)[0];
@@ -32,3 +34,6 @@ export function ellipseAddress(address = '', width = 10): string {
   }
   return `${address.slice(0, width)}...${address.slice(-width)}`;
 }
+
+export const parseBalance = (value: BigNumberish, decimals = 18, decimalsToDisplay = 3) =>
+  parseFloat(formatUnits(value, decimals)).toFixed(decimalsToDisplay);

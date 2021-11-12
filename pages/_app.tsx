@@ -133,7 +133,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
           <WalletContext.Provider
-            value={{ walletState, setWalletState, connect, disconnect, chainData }}
+            value={{ walletState, setWalletState, connect, disconnect, chainData, web3Provider }}
           >
             <Component {...pageProps} />
           </WalletContext.Provider>
